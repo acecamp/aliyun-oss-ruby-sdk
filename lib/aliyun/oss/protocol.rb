@@ -1560,7 +1560,7 @@ module Aliyun
         r = @http.put({:bucket => name,  :object => channel_name, :sub_res => {:live => nil}}, {:body => body})
         doc = parse_xml(r.body)
         publish_url = get_node_text(doc, 'PublishUrls')
-        play_url = get_node_text(doc, 'PublishUrls')
+        play_url = get_node_text(doc, 'PlayUrls')
         logger.info("Done create bucket")
         {
           publish_url: publish_url,
