@@ -1544,10 +1544,10 @@ module Aliyun
         # location = opts[:location]
         # body = nil
         builder = Nokogiri::XML::Builder.new do |xml|
-          xml.CreateLiveChannelConfiguration {
+          xml.LiveChannelConfiguration {
             xml.Description '描述'
             xml.Status 'enabled'
-            xml.CreateTarget {
+            xml.Target {
               xml.Type 'HLS'
               xml.FragDuration 5
               xml.FragCount 3
@@ -1556,9 +1556,8 @@ module Aliyun
           }
         end
         body = builder.to_xml
+        @http.put({:bucket => name,  :object => channel_name, :sub_res => {:live => nil}}, {:body => body})
         binding.pry
-        @http.put({:bucket => name,  :object => channel_name}, {:body => body, :query => {:live => ''}})
-
         logger.info("Done create bucket")
       end
 
