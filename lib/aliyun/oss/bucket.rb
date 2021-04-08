@@ -630,7 +630,7 @@ module Aliyun
             'date' => expires.to_s,
           }
 
-          #query 
+          #query
           if @protocol.get_sts_token
             query['security-token'] = @protocol.get_sts_token
           end
@@ -644,7 +644,7 @@ module Aliyun
           query['Expires'] = expires.to_s
           query['OSSAccessKeyId'] = @protocol.get_access_key_id
           query['Signature'] = signature
-        end  
+        end
 
         query_string = query.map { |k, v| v ? [k, CGI.escape(v)].join("=") : k }.join("&")
         link_char = query_string.empty? ? '' : '?'
@@ -676,6 +676,9 @@ module Aliyun
         @protocol.upload_crc_enable
       end
 
+      def create_live_channel(key)
+        @protocol.create_live_channel(name, key)
+      end
       private
       # Infer the file's content type using MIME::Types
       # @param file [String] the file path

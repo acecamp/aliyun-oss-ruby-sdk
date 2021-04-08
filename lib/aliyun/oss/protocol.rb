@@ -1511,7 +1511,7 @@ module Aliyun
       # @return [String] the access key secret
       def get_access_key_secret
         @config.access_key_secret
-      end  
+      end
 
       # Get user's STS token
       # @return [String] the STS token
@@ -1536,6 +1536,29 @@ module Aliyun
       # @return true(upload crc enable) or false(upload crc disable)
       def upload_crc_enable
         @config.upload_crc_enable
+      end
+
+      def create_live_channel(name, channel_name, opts = {})
+        logger.info("Begin create live channel, name: #{channel_name}, opts: #{opts}")
+
+        # location = opts[:location]
+        # body = nil
+        builder = Nokogiri::XML::Builder.new do |xml|
+          xml.CreateLiveChannelConfiguration {
+            xml.Description '描述'
+            xml.Status 'enabled'
+            xml.CreateTarget {
+              xml.Type 'HLS'
+              xml.FragDuration 5
+              xml.FragCount 3
+              xml.PlaylistName "#{channel_name}.m3u8"
+            }
+          }
+        end
+        body = builder.to_xml
+        @http.put({:bucket => name,  :object => channel_name}, {:body => body})
+
+        logger.info("Done create bucket")
       end
 
       private
