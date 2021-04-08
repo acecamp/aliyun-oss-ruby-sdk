@@ -1556,7 +1556,8 @@ module Aliyun
           }
         end
         body = builder.to_xml
-        @http.put({:bucket => name,  :object => channel_name}, {:body => body, :query => {:live => nil}})
+        binding.pry
+        @http.put({:bucket => name,  :object => channel_name}, {:body => body, :query => {:live => ''}})
 
         logger.info("Done create bucket")
       end
