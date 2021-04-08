@@ -1543,6 +1543,7 @@ module Aliyun
 
         # location = opts[:location]
         # body = nil
+        playlist_name = opts[:playlist_name] || "#{channel_name}.m3u8"
         builder = Nokogiri::XML::Builder.new do |xml|
           xml.LiveChannelConfiguration {
             xml.Description '描述'
@@ -1551,13 +1552,12 @@ module Aliyun
               xml.Type 'HLS'
               xml.FragDuration 5
               xml.FragCount 3
-              xml.PlaylistName "#{channel_name}.m3u8"
+              xml.PlaylistName playlist_name
             }
           }
         end
         body = builder.to_xml
         @http.put({:bucket => name,  :object => channel_name, :sub_res => {:live => nil}}, {:body => body})
-        binding.pry
         logger.info("Done create bucket")
       end
 

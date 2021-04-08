@@ -676,9 +676,10 @@ module Aliyun
         @protocol.upload_crc_enable
       end
 
-      def create_live_channel(key)
-        @protocol.create_live_channel(name, key)
+      def create_live_channel(key, opt={})
+        @protocol.create_live_channel(name, key, opt)
       end
+
       private
       # Infer the file's content type using MIME::Types
       # @param file [String] the file path
