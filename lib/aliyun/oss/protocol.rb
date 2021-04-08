@@ -1513,6 +1513,10 @@ module Aliyun
         @config.access_key_secret
       end
 
+      def get_endpoint
+        @config.endpoint
+      end
+
       # Get user's STS token
       # @return [String] the STS token
       def get_sts_token

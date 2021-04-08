@@ -682,7 +682,6 @@ module Aliyun
 
       def sign_rtmp_url(channel_name, expiry, params={})
         expires = Time.zone.now.to_i + expiry
-        binding.pry
         cano_query = params.sort.map {
           |k, v| [CGI.escape(k), CGI.escape(v)].join(':') }.join("\n")
         cano_resource = "#{name}/#{channel_name}"
@@ -690,7 +689,8 @@ module Aliyun
         signature = @protocol.sign(string_to_sign)
         query = params.sort.map {
           |k, v| [CGI.escape(k), CGI.escape(v)].join('=') }.join("&")
-        "rtmp://#{@config.get_endpoint}/live/#{channel_name}?OSSAccessKeyId=#{@config.get_access_key_id}&Expires=#{expires}&Signature=#{signature}"
+        binding.pry
+        "rtmp://#{@protocol.get_endpoint}/live/#{channel_name}?OSSAccessKeyId=#{@protocol.get_access_key_id}&Expires=#{expires}&Signature=#{signature}"
       end
 
 
