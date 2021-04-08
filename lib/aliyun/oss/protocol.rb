@@ -1559,8 +1559,13 @@ module Aliyun
         body = builder.to_xml
         r = @http.put({:bucket => name,  :object => channel_name, :sub_res => {:live => nil}}, {:body => body})
         doc = parse_xml(r.body)
-        binding.pry
+        publish_url = get_node_text(doc, 'PublishUrls')
+        play_url = get_node_text(doc, 'PublishUrls')
         logger.info("Done create bucket")
+        {
+          publish_url: publish_url,
+          play_url: play_url
+        }
       end
 
       private
